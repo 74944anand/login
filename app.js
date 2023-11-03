@@ -30,7 +30,7 @@ app.post("/register", async (req, resp) => {
 });
 
 //Routes
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   res.render("main.ejs");
 });
 app.get("/login", (req, res) => {
@@ -39,7 +39,7 @@ app.get("/login", (req, res) => {
 app.get("/register", (req, res) => {
   res.render("register.ejs");
 });
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 //End Routes
