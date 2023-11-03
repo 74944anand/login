@@ -57,7 +57,7 @@ app.post("/login", async (req, res) => {
     con.query(sql, [email], async (err, rows) => {
       if (err) {
         console.error(err);
-        return res.status(500).send("Login failed");
+        return res.status(500).redirect("/login");
       }
 
       if (rows.length === 0) {
@@ -88,8 +88,6 @@ app.use(
     cookie: { secure: false },
   })
 );
-
-
 
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
