@@ -6,7 +6,8 @@ const bcrypt = require("bcrypt");
 const app = express();
 
 const users = [];
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: "anand", resave: false, saveUninitialized: true }));
 
 //Post
 app.post("/register", async (req, resp) => {
@@ -78,7 +79,7 @@ app.post("/login", async (req, res) => {
 //logout
 app.use(
   session({
-    secret: process.env.SECRET_KEY,
+    secret: "anand",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
