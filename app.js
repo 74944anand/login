@@ -17,7 +17,7 @@ app.post("/register", async (req, resp) => {
     const hashpassword = await bcrypt.hash(password, saltRounds);
     console.log(users);
     const sql =
-      "INSERT INTO temp (fname,lname, email,contact_no, password) VALUES (?,?, ?, ?, ?)";
+      "INSERT INTO user (fname,lname, email,contact_no, password) VALUES (?,?, ?, ?, ?)";
     const values = [fname, lname, email, c_num, hashpassword];
 
     con.query(sql, values, (err, result) => {
@@ -50,7 +50,7 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const sql = "SELECT * FROM temp WHERE email = ?";
+    const sql = "SELECT * FROM user WHERE email = ?";
     con.query(sql, [email], async (err, rows) => {
       if (err) {
         console.error(err);
@@ -77,14 +77,22 @@ app.post("/login", async (req, res) => {
 });
 
 //logout
-app.use(
-  session({
-    secret: "anand",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-  })
-);
+// app.use(
+//   session({
+//     secret: "anand",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false },
+//   })
+// );
+
+app.get("/home", (req, res) => {
+  if (req.session.user) {
+    res.send(`Welcome to the protected page, ${req.session.user}`);
+  } else {
+    res.redirect("/login");
+  }
+});
 
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
