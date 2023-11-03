@@ -31,7 +31,11 @@ app.post("/register", async (req, resp) => {
 
 //Routes
 app.get("/home", (req, res) => {
-  res.render("main.ejs");
+  if (req.session.user) {
+    res.send(`Welcome to the protected page, ${req.session.user}`);
+  } else {
+    res.redirect("/login");
+  }
 });
 app.get("/login", (req, res) => {
   res.render("login.ejs");
@@ -76,22 +80,16 @@ app.post("/login", async (req, res) => {
 });
 
 //logout
-// app.use(
-//   session({
-//     secret: "anand",
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false },
-//   })
-// );
+app.use(
+  session({
+    secret: "anand",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
-app.get("/home", (req, res) => {
-  if (req.session.user) {
-    res.send(`Welcome to the protected page, ${req.session.user}`);
-  } else {
-    res.redirect("/login");
-  }
-});
+
 
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
