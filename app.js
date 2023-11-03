@@ -30,7 +30,7 @@ app.post("/register", async (req, resp) => {
 });
 
 //Routes
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
   res.render("main.ejs");
 });
 app.get("/login", (req, res) => {
