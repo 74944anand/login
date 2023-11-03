@@ -5,7 +5,6 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const app = express();
 
-const users = [];
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "anand", resave: false, saveUninitialized: true }));
 
@@ -58,7 +57,7 @@ app.post("/login", async (req, res) => {
       }
 
       if (rows.length === 0) {
-        return res.status(401).send("Invalid username or password");
+        return res.status(401).redirect("/login");
       }
 
       const user = rows[0];
@@ -100,7 +99,7 @@ app.get("/logout", (req, res) => {
       console.error(err);
       res.status(500).send("Logout failed");
     } else {
-      res.redirect("/index");
+      res.redirect("/");
     }
   });
 });
