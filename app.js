@@ -37,6 +37,17 @@ app.get("/home", (req, res) => {
     res.redirect("/login");
   }
 });
+
+app.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Logout failed");
+    } else {
+      res.redirect("/");
+    }
+  });
+});
 app.get("/login", (req, res) => {
   res.render("login.ejs");
 });
@@ -45,6 +56,10 @@ app.get("/register", (req, res) => {
 });
 app.get("/", (req, res) => {
   res.render("index.ejs");
+});
+app.get("/style.css", (req, res) => {
+  res.set("Content-Type", cssMimeType);
+  res.sendFile(__dirname + "/Style/style.css");
 });
 //End Routes
 //password verify
@@ -89,15 +104,4 @@ app.use(
   })
 );
 
-app.get("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Logout failed");
-    } else {
-      res.redirect("/");
-    }
-  });
-});
-
-app.listen(process.env.PORT);
+app.listen(3000);
