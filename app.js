@@ -61,6 +61,7 @@ app.get("/style.css", (req, res) => {
   res.set("Content-Type", cssMimeType);
   res.sendFile(__dirname + "/Style/style.css");
 });
+
 //End Routes
 //password verify
 
@@ -95,13 +96,6 @@ app.post("/login", async (req, res) => {
 });
 
 //logout
-app.use(
-  session({
-    secret: "anand",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-  })
-);
+
 
 app.listen(3000);
